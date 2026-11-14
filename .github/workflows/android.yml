@@ -15,23 +15,18 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Configurar Java 17
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Localizar gradlew e Compilar APK (Debug)
-      run: |
-        GRADLEW_PATH=$(find . -name "gradlew" -print -quit)
-        if [ -z "$GRADLEW_PATH" ]; then
-          echo "Erro: Arquivo gradlew não encontrado em nenhuma pasta deste repositório!"
-          exit 1
-        fi
-        PROJECT_DIR=$(dirname "$GRADLEW_PATH")
-        echo "Projeto encontrado em: $PROJECT_DIR"
-        cd "$PROJECT_DIR"
-        chmod +x gradlew
-        ./gradlew assembleDebug
+    - name: Configurar e Compilar com Gradle
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: '8.7'
+
+    - name: Compilar APK (Debug)
+      run: gradle assembleDebug
 
     - name: Salvar APK como Artefato
       uses: actions/upload-artifact@v4
