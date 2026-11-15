@@ -104,7 +104,7 @@ class MonitorService : Service() {
         while (running) {
             val cfg = Config.load(this) // lida a cada ciclo: mudancas valem na proxima requisicao
             logic.onConfig(cfg)
-            val alvo = "${cfg.car - cfg.advance}-${cfg.car}"
+            val alvo = rangeLabel(cfg)
             try {
                 val cur = fetch(cfg)
                 lastOk = SystemClock.elapsedRealtime()

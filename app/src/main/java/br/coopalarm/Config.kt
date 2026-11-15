@@ -6,6 +6,7 @@ data class Cfg(
     val url: String,
     val interval: Int,     // segundos entre consultas
     val car: Int,          // codigo do carro
+    val maxCode: Int,      // maior codigo da fila; depois dele a numeracao reinicia
     val general: Int,      // codigo geral (qualquer carro atende)
     val advance: Int,      // antecedencia do alarme
     val offlineMin: Int    // minutos sem leitura valida para avisar
@@ -20,6 +21,7 @@ object Config {
             s.getString("url", "") ?: "",
             s.getInt("interval", 60),
             s.getInt("car", 350),
+            s.getInt("maxCode", 999),
             s.getInt("general", 0),
             s.getInt("advance", 100),
             s.getInt("offlineMin", 5)
@@ -31,6 +33,7 @@ object Config {
             .putString("url", g.url)
             .putInt("interval", g.interval)
             .putInt("car", g.car)
+            .putInt("maxCode", g.maxCode)
             .putInt("general", g.general)
             .putInt("advance", g.advance)
             .putInt("offlineMin", g.offlineMin)
